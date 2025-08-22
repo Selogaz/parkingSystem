@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import parking.service.ParkingService;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/parking")
@@ -26,6 +25,6 @@ public class ParkingController {
 
     @PostMapping()
     public Car setEntry(@RequestBody Car newRequest) {
-        return parkingService.createEntry(newRequest.getId(), newRequest.getCarNumber());
+        return parkingService.entryCar(newRequest.getId(), newRequest.getCarNumber());
     }
 }
