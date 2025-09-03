@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import parking.service.ParkingService;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/parking")
@@ -25,11 +27,12 @@ public class ParkingController {
 
     @PostMapping("/entry")
     public Car setEntry(@RequestBody Car newRequest) {
-        return parkingService.entryCar(newRequest.getId(), newRequest.getCarNumber());
+        newRequest.setId(UUID.randomUUID());
+        return parkingService.entryCar(newRequest.getId());
     }
 
     @PostMapping("/exit")
     public Car setExit(@RequestBody Car newRequest) {
-        return parkingService.exitCar(newRequest.getId(), newRequest.getCarNumber());
+        return parkingService.exitCar(newRequest.getId());
     }
 }

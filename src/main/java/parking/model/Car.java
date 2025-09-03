@@ -5,12 +5,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
 public class Car {
-    private Long id;
-    private String carNumber;
+    private UUID id;
     private boolean isInsideParking;
     private LocalDateTime entryTime;
 
@@ -18,14 +18,12 @@ public class Car {
 
     }
 
-    public Car(Long id, String carNumber, boolean isInsideParking) {
+    public Car(UUID id, boolean isInsideParking) {
         this.id = id;
-        this.carNumber = carNumber;
         this.isInsideParking = isInsideParking;
     }
 
-    public Car(Long id, String carNumber) {
+    public Car(UUID id) {
         this.id = id;
-        this.carNumber = carNumber;
     }
 }
