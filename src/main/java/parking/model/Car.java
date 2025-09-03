@@ -4,12 +4,15 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class Car {
     private Long id;
     private String carNumber;
     private boolean isInsideParking;
+    private LocalDateTime entryTime;
 
     public Car() {
 

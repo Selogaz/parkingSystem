@@ -18,13 +18,18 @@ public class ParkingController {
         this.parkingService = parkingService;
     }
 
-    @GetMapping("/entry")
+    @GetMapping()
     public List<Car> getEntryRequest() {
         return parkingService.getEntry();
     }
 
-    @PostMapping()
+    @PostMapping("/entry")
     public Car setEntry(@RequestBody Car newRequest) {
         return parkingService.entryCar(newRequest.getId(), newRequest.getCarNumber());
+    }
+
+    @PostMapping("/exit")
+    public Car setExit(@RequestBody Car newRequest) {
+        return parkingService.exitCar(newRequest.getId(), newRequest.getCarNumber());
     }
 }
