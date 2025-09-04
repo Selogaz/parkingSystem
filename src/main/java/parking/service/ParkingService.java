@@ -22,35 +22,16 @@ public class ParkingService {
     private final PaymentService paymentService;
 
     public ParkingService(PaymentService paymentService) {
-
         this.paymentService = paymentService;
     }
 
-    public Response indexEntry(UUID id) {
-        entryCar(id);
+    public Response getResponse(UUID id) {
         Response response = new Response();
         response.setCarId(id);
         return response;
     }
 
-    public Response indexExit(UUID id) {
-        exitCar(id);
-        Response response = new Response();
-        response.setCarId(id);
-        return response;
-    }
-
-    public Response indexChangeTime(UUID id) {
-        if (changeEntryTime(id)) {
-            Response response = new Response();
-            response.setCarId(id);
-            return response;
-        } else {
-            throw new NoSuchElementException("Не удалось изменить время въезда");
-        }
-    }
-
-    public boolean entryCar(UUID id) {
+    public Response entryCar(UUID id) {
         Car newCar = new Car(id);
         if (carList.size() < PARKING_ZONE_SIZE) {
             newCar.setInsideParking(true);
@@ -61,20 +42,25 @@ public class ParkingService {
             throw new ParkingException("Въезд невозможен! Парковка заполнена!");
         }
         carList.add(newCar);
-        return true;
+        return getResponse(id);
     }
 
-    public boolean exitCar(UUID id) {
+    public Response exitCar(UUID id) {
         for (Car car : carList) {
             if (car.getId().equals(id)) {
                 long minutesParked = java.time.Duration.between(car.getEntryTime(), LocalDateTime.now()).toMinutes();
                 if (minutesParked < MAXIMUM_PARKING_TIME_IN_MINUTES) {
                     carList.remove(car);
                     System.out.println("Автомобиль с id " + car.getId() + " успешно покинул парковку");
-                    return true;
+                    return getResponse(id);
                 } else {
-                    throw new PaymentRequiredException("Время бесплатной парковки истекло!");
-                    //return paymentService.pay(car.getId());
+                    System.out.println("Бесплатный период истек! Начинается оплата...");
+                    boolean paymentSuccess = paymentService.pay(car.getId());
+                    if (paymentSuccess) {
+                        carList.remove(car);
+                        System.out.println("Автомобиль с id " + car.getId() + " оплатил парковку и уехал");
+                        return getResponse(id);
+                    }
                 }
             }
         }
@@ -85,13 +71,13 @@ public class ParkingService {
         return carList;
     }
 
-    public boolean changeEntryTime(UUID id) {
+    public Response changeEntryTime(UUID id) {
         for (Car car : carList) {
             if (car.getId().equals(id)) {
                 car.setEntryTime(LocalDateTime.now().minusMinutes(40));
-                return true;
+                return getResponse(id);
             }
         }
-        return false;
+        throw new NoSuchElementException("Не удалось изменить время въезда");
     }
 }

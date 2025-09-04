@@ -1,6 +1,7 @@
 package parking.service;
 
 import org.springframework.stereotype.Service;
+import parking.exceptions.PaymentRequiredException;
 
 import java.util.HashSet;
 import java.util.UUID;
@@ -20,11 +21,11 @@ public class PaymentService {
 
     private boolean isPaymentValid(UUID id) {
         if (payList.contains(id)) {
-            System.out.println("Оплата прошла успешно!");
+            System.out.println("Оплата для id " + id + " прошла успешно!");
             return true;
         } else {
-            System.err.println("Оплата не прошла! Попробуйте еще раз!");
-            return false;
+            System.err.println("Оплата для id " + id + " не прошла! Попробуйте еще раз!");
+            throw new PaymentRequiredException("Оплата для id " + id + " не прошла! Попробуйте еще раз!");
         }
     }
 }

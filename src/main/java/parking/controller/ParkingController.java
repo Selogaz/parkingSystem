@@ -34,17 +34,17 @@ public class ParkingController {
     @PostMapping("/entry")
     public ResponseEntity<Response> entryCar(@RequestBody Car newRequest) {
         newRequest.setId(UUID.randomUUID());
-        return ResponseEntity.ok(parkingService.indexEntry(newRequest.getId()));
+        return ResponseEntity.ok(parkingService.entryCar(newRequest.getId()));
     }
 
     @PostMapping("/exit")
     public ResponseEntity<Response> exitCar(@RequestBody Car newRequest) {
-        return ResponseEntity.ok(parkingService.indexExit(newRequest.getId()));
+        return ResponseEntity.ok(parkingService.exitCar(newRequest.getId()));
     }
 
     @PostMapping("change_time")
     public ResponseEntity<Response> changeTime(@RequestBody Car newRequest) {
-        return ResponseEntity.ok(parkingService.indexChangeTime(newRequest.getId()));
+        return ResponseEntity.ok(parkingService.changeEntryTime(newRequest.getId()));
     }
 
     @ExceptionHandler(ParkingException.class)
