@@ -18,11 +18,6 @@ public class Car {
 
     }
 
-    public Car(UUID id, boolean isInsideParking) {
-        this.id = id;
-        this.isInsideParking = isInsideParking;
-    }
-
     public Car(UUID id) {
         this.id = id;
     }

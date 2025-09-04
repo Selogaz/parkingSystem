@@ -1,11 +1,11 @@
 package parking.controller;
 
+import parking.dto.Response;
 import parking.model.Car;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import parking.service.ParkingService;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,13 +26,18 @@ public class ParkingController {
     }
 
     @PostMapping("/entry")
-    public Car setEntry(@RequestBody Car newRequest) {
+    public Response entryCar(@RequestBody Car newRequest) {
         newRequest.setId(UUID.randomUUID());
-        return parkingService.entryCar(newRequest.getId());
+        return parkingService.indexEntry(newRequest.getId());
     }
 
     @PostMapping("/exit")
-    public Car setExit(@RequestBody Car newRequest) {
-        return parkingService.exitCar(newRequest.getId());
+    public Response exitCar(@RequestBody Car newRequest) {
+        return parkingService.indexExit(newRequest.getId());
+    }
+
+    @PostMapping("change_time")
+    public Response changeTime(@RequestBody Car newRequest) {
+        return parkingService.indexChangeTime(newRequest.getId());
     }
 }
