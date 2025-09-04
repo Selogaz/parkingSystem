@@ -1,12 +1,15 @@
 package parking.service;
 
 import parking.dto.Response;
+import parking.exceptions.ParkingException;
+import parking.exceptions.PaymentRequiredException;
 import parking.model.Car;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
@@ -24,35 +27,26 @@ public class ParkingService {
     }
 
     public Response indexEntry(UUID id) {
+        entryCar(id);
         Response response = new Response();
         response.setCarId(id);
-        if (entryCar(id)) {
-            return response;
-        } else {
-            response.setErrorMsg("Hе удалось заехать на парковку");
-            return response;
-        }
+        return response;
     }
 
     public Response indexExit(UUID id) {
+        exitCar(id);
         Response response = new Response();
         response.setCarId(id);
-        if (exitCar(id)) {
-            return response;
-        } else {
-            response.setErrorMsg("Hе удалось выехать с парковки");
-            return response;
-        }
+        return response;
     }
 
     public Response indexChangeTime(UUID id) {
-        Response response = new Response();
-        response.setCarId(id);
         if (changeEntryTime(id)) {
+            Response response = new Response();
+            response.setCarId(id);
             return response;
         } else {
-            response.setErrorMsg("Не удалось изменить время въезда");
-            return response;
+            throw new NoSuchElementException("Не удалось изменить время въезда");
         }
     }
 
@@ -64,7 +58,7 @@ public class ParkingService {
             System.out.println("Добавлен автомобиль с id " + id);
         } else {
             System.err.println("Въезд невозможен! Парковка заполнена!");
-            return false;
+            throw new ParkingException("Въезд невозможен! Парковка заполнена!");
         }
         carList.add(newCar);
         return true;
@@ -79,12 +73,12 @@ public class ParkingService {
                     System.out.println("Автомобиль с id " + car.getId() + " успешно покинул парковку");
                     return true;
                 } else {
-                    System.err.println("Время бесплатной парковки истекло! Плоти нологе!!");
-                    return paymentService.pay(car.getId());
+                    throw new PaymentRequiredException("Время бесплатной парковки истекло!");
+                    //return paymentService.pay(car.getId());
                 }
             }
         }
-        return false;
+        throw new NoSuchElementException("Автомобиль с указанным ID не найден на парковке.");
     }
 
     public List<Car> getEntry() {

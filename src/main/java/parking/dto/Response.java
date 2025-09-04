@@ -10,4 +10,11 @@ import java.util.UUID;
 public class Response {
     private UUID carId;
     private String errorMsg;
+
+    public Response(String defaultErrorMessage) {
+        this.errorMsg = defaultErrorMessage;
+    }
+
+    public Response() {
+    }
 }
