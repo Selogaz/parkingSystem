@@ -11,8 +11,9 @@ import java.util.UUID;
 @Setter
 public class Car {
     private UUID id;
-    private boolean isInsideParking;
+    private boolean isInside;
     private LocalDateTime entryTime;
+    private LocalDateTime exitTime;
 
     public Car() {
 
