@@ -12,6 +12,10 @@ public class Converter {
     }
 
     public static Car fromRequestToCar(CarRequest carRequest) {
-        return new Car(carRequest);
+        Car car = new Car();
+        car.setId(carRequest.id());
+        car.setEntryTime(carRequest.entryTime());
+        car.setExitTime(carRequest.exitTime());
+        return car;
     }
 }

@@ -12,19 +12,11 @@ import java.util.UUID;
 @Setter
 public class Car {
     private UUID id;
-    private boolean isInside;
     private LocalDateTime entryTime;
     private LocalDateTime exitTime;
 
     public Car() {
 
-    }
-
-    public Car(CarRequest request) {
-        this.id = request.id();
-        this.isInside = request.isInside();
-        this.entryTime = request.entryTime();
-        this.exitTime = request.exitTime();
     }
 
     public Car(UUID id) {
