@@ -26,7 +26,6 @@ public class ParkingService {
         UUID id = UUID.randomUUID();
         Car newCar = new Car(id);
         if (parkingStorage.size() < PARKING_ZONE_SIZE) {
-            newCar.setInside(true);
             newCar.setEntryTime(LocalDateTime.now());
             System.out.println("Добавлен автомобиль с id " + id);
         } else {
@@ -41,7 +40,6 @@ public class ParkingService {
         Car car = parkingStorage.getEntity(id);
         long minutesParked = java.time.Duration.between(car.getEntryTime(), LocalDateTime.now()).toMinutes();
         if (minutesParked < MAXIMUM_PARKING_TIME_IN_MINUTES) {
-            car.setInside(false);
             car.setExitTime(LocalDateTime.now());
             parkingStorage.removeEntity(car);
             System.out.println("Автомобиль с id " + car.getId() + " успешно покинул парковку");
