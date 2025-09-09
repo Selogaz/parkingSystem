@@ -3,6 +3,7 @@ package parking.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import parking.controller.converter.Converter;
+import parking.controller.model.CarRequest;
 import parking.controller.model.Response;
 import parking.service.parking.ParkingException;
 import parking.service.payment.PaymentRequiredException;
@@ -38,8 +39,9 @@ public class ParkingController {
     }
 
     @PostMapping("/exit")
-    public ResponseEntity<Response> exitCar(@RequestBody Car newRequest) {
-        Response response = Converter.toResponse(parkingService.exitCar(newRequest.getId()));
+    public ResponseEntity<Response> exitCar(@RequestBody CarRequest newRequest) {
+        Car car = Converter.fromRequestToCar(newRequest);
+        Response response = Converter.toResponse(parkingService.exitCar(car.getId()));
         return ResponseEntity.ok(response);
     }
 
