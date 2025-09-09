@@ -3,6 +3,7 @@ package parking.model;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import parking.controller.model.CarRequest;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -17,6 +18,13 @@ public class Car {
 
     public Car() {
 
+    }
+
+    public Car(CarRequest request) {
+        this.id = request.id();
+        this.isInside = request.isInside();
+        this.entryTime = request.entryTime();
+        this.exitTime = request.exitTime();
     }
 
     public Car(UUID id) {

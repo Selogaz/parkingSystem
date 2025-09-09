@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import parking.service.parking.ParkingService;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -28,7 +29,7 @@ public class ParkingController {
     }
 
     @GetMapping()
-    public List<Car> getEntryRequest() {
+    public Collection<Car> getEntryRequest() {
         return parkingService.getEntry();
     }
 
