@@ -2,17 +2,17 @@ package parking.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import parking.dto.Response;
-import parking.exceptions.ParkingException;
-import parking.exceptions.PaymentRequiredException;
+import parking.controller.converter.Converter;
+import parking.controller.model.Response;
+import parking.service.parking.ParkingException;
+import parking.service.payment.PaymentRequiredException;
 import parking.model.Car;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import parking.service.ParkingService;
+import parking.service.parking.ParkingService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/parking")
@@ -32,19 +32,15 @@ public class ParkingController {
     }
 
     @PostMapping("/entry")
-    public ResponseEntity<Response> entryCar(@RequestBody Car newRequest) {
-        newRequest.setId(UUID.randomUUID());
-        return ResponseEntity.ok(parkingService.entryCar(newRequest.getId()));
+    public ResponseEntity<Response> entryCar() {
+        Response response = Converter.toResponse(parkingService.entryCar());
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/exit")
     public ResponseEntity<Response> exitCar(@RequestBody Car newRequest) {
-        return ResponseEntity.ok(parkingService.exitCar(newRequest.getId()));
-    }
-
-    @PostMapping("change_time")
-    public ResponseEntity<Response> changeTime(@RequestBody Car newRequest) {
-        return ResponseEntity.ok(parkingService.changeEntryTime(newRequest.getId()));
+        Response response = Converter.toResponse(parkingService.exitCar(newRequest.getId()));
+        return ResponseEntity.ok(response);
     }
 
     @ExceptionHandler(ParkingException.class)

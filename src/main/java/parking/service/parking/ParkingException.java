@@ -1,4 +1,4 @@
-package parking.exceptions;
+package parking.service.parking;
 
 public class ParkingException extends RuntimeException {
     public ParkingException(String message) {

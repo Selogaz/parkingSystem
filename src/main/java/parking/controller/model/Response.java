@@ -1,4 +1,4 @@
-package parking.dto;
+package parking.controller.model;
 
 import lombok.Getter;
 import lombok.Setter;

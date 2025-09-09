@@ -1,7 +1,6 @@
-package parking.service;
+package parking.service.payment;
 
 import org.springframework.stereotype.Service;
-import parking.exceptions.PaymentRequiredException;
 
 import java.util.HashSet;
 import java.util.UUID;
