@@ -9,10 +9,12 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
+
 public class ParkingStorageInMemory implements ParkingStorage{
     private final Map<UUID, Car> carsInsideMap = new ConcurrentHashMap<>();
 
     public void putEntity(Car car) {
+        car.setId(UUID.randomUUID());
         carsInsideMap.put(car.getId(),car);
     }
 

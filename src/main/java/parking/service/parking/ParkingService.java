@@ -25,16 +25,16 @@ public class ParkingService {
     }
 
     public Car entryCar() {
-        UUID id = UUID.randomUUID();
         Car newCar = new Car();
         if (parkingStorage.size() < PARKING_ZONE_SIZE) {
             newCar.setEntryTime(LocalDateTime.now());
-            System.out.println("Добавлен автомобиль с id " + id);
+
         } else {
             System.err.println("Въезд невозможен! Парковка заполнена!");
             throw new ParkingException("Въезд невозможен! Парковка заполнена!");
         }
         parkingStorage.putEntity(newCar);
+        System.out.println("Добавлен автомобиль с id " + newCar.getId());
         return newCar;
     }
 
