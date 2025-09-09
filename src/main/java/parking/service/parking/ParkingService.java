@@ -1,8 +1,10 @@
 package parking.service.parking;
 
+import org.springframework.transaction.annotation.Transactional;
 import parking.model.Car;
 import org.springframework.stereotype.Service;
 import parking.service.payment.PaymentService;
+import parking.storage.ParkingStorage;
 import parking.storage.ParkingStorageInMemory;
 
 import java.time.LocalDateTime;
@@ -15,16 +17,16 @@ public class ParkingService {
     private final int MAXIMUM_PARKING_TIME_IN_MINUTES = 30;
 
     private final PaymentService paymentService;
-    private final ParkingStorageInMemory parkingStorage;
+    private final ParkingStorage parkingStorage;
 
-    public ParkingService(PaymentService paymentService, ParkingStorageInMemory parkingStorage) {
+    public ParkingService(PaymentService paymentService, ParkingStorage parkingStorage) {
         this.paymentService = paymentService;
         this.parkingStorage = parkingStorage;
     }
 
     public Car entryCar() {
         UUID id = UUID.randomUUID();
-        Car newCar = new Car(id);
+        Car newCar = new Car();
         if (parkingStorage.size() < PARKING_ZONE_SIZE) {
             newCar.setEntryTime(LocalDateTime.now());
             System.out.println("Добавлен автомобиль с id " + id);

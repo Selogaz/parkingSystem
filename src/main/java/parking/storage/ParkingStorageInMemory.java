@@ -28,7 +28,7 @@ public class ParkingStorageInMemory implements ParkingStorage{
         return carsInsideMap.values();
     }
 
-    public int size() {
+    public long size() {
        return carsInsideMap.size();
     }
 }

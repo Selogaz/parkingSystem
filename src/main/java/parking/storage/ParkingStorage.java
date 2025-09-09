@@ -10,5 +10,5 @@ public interface ParkingStorage {
     void removeEntity(Car car);
     Car getEntity(UUID id);
     Collection<Car> getAllEntities();
-    int size();
+    long size();
 }
