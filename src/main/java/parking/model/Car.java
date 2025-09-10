@@ -27,6 +27,9 @@ public class Car {
     @Column(name = "exit_time")
     private LocalDateTime exitTime;
 
+    @OneToOne(mappedBy = "car", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Payment payment;
+
     public Car() {
 
     }

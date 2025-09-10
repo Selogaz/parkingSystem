@@ -48,7 +48,7 @@ public class ParkingService {
             return car;
         } else {
             System.out.println("Бесплатный период истек! Начинается оплата...");
-            boolean paymentSuccess = paymentService.pay(car.getId());
+            boolean paymentSuccess = paymentService.pay(car);
             if (paymentSuccess) {
                 parkingStorage.removeEntity(car);
                 System.out.println("Автомобиль с id " + car.getId() + " оплатил парковку и уехал");
@@ -66,6 +66,8 @@ public class ParkingService {
         try {
             Car car = parkingStorage.getEntity(id);
             car.setEntryTime(LocalDateTime.now().minusMinutes(40));
+            parkingStorage.putEntity(car);
+            System.out.println("Время успешно изменено!");
             return car;
         } catch (Exception e) {
             throw new NoSuchElementException("Не удалось изменить время въезда");
