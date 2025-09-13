@@ -3,7 +3,7 @@ package parking.service.payment;
 import org.springframework.stereotype.Service;
 import parking.model.Car;
 import parking.model.Payment;
-import parking.storage.PaymentStorage;
+import parking.storage.payment.PaymentStorage;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;

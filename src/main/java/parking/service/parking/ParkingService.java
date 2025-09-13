@@ -1,11 +1,9 @@
 package parking.service.parking;
 
-import org.springframework.transaction.annotation.Transactional;
 import parking.model.Car;
 import org.springframework.stereotype.Service;
 import parking.service.payment.PaymentService;
-import parking.storage.ParkingStorage;
-import parking.storage.ParkingStorageInMemory;
+import parking.storage.parking.ParkingStorage;
 
 import java.time.LocalDateTime;
 import java.util.*;

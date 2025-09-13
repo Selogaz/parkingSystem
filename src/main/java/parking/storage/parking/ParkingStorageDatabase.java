@@ -1,4 +1,4 @@
-package parking.storage;
+package parking.storage.parking;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -6,7 +6,6 @@ import parking.model.Car;
 import parking.repository.ParkingRepository;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
 
 @Component

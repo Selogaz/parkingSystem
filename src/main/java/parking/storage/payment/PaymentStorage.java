@@ -1,4 +1,4 @@
-package parking.storage;
+package parking.storage.payment;
 
 import parking.model.Car;
 import parking.model.Payment;

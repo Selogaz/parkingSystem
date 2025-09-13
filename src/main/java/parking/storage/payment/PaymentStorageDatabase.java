@@ -1,15 +1,10 @@
-package parking.storage;
+package parking.storage.payment;
 
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import parking.model.Car;
 import parking.model.Payment;
 import parking.repository.ParkingRepository;
 import parking.repository.PaymentRepository;
-
-import java.time.LocalDateTime;
-import java.util.Random;
-import java.util.UUID;
 
 @Component
 public class PaymentStorageDatabase implements PaymentStorage{

@@ -1,4 +1,4 @@
-package parking.storage;
+package parking.storage.parking;
 
 import org.springframework.stereotype.Component;
 import parking.model.Car;
