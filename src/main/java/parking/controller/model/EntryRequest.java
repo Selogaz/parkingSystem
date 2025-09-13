@@ -3,7 +3,7 @@ package parking.controller.model;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record CarRequest(
+public record EntryRequest(
         UUID id,
         boolean isInside,
         LocalDateTime entryTime,

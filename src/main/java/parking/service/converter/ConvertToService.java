@@ -1,22 +1,22 @@
 package parking.service.converter;
 
-import parking.model.Car;
+import parking.model.Entry;
 import parking.model.Payment;
-import parking.service.model.CarService;
-import parking.service.model.PaymentModelService;
+import parking.service.model.EntryModel;
+import parking.service.model.PaymentModel;
 
 public class ConvertToService {
-    public static CarService entryToService(Car car) {
-        if (car.getPayment() == null) {
-            return new CarService(car.getId(),car.getEntryTime(),
-                    car.getExitTime(),null);
+    public static EntryModel entryToService(Entry entry) {
+        if (entry.getPayment() == null) {
+            return new EntryModel(entry.getId(), entry.getEntryTime(),
+                    entry.getExitTime(),null);
         }
-        PaymentModelService payService = new PaymentModelService(car.getPayment().getPayTime(),car.getPayment().getAmount());
-        return new CarService(car.getId(),car.getEntryTime(),
-                car.getExitTime(),payService);
+        PaymentModel payService = new PaymentModel(entry.getPayment().getPayTime(), entry.getPayment().getAmount());
+        return new EntryModel(entry.getId(), entry.getEntryTime(),
+                entry.getExitTime(),payService);
     }
 
-    public static PaymentModelService entryToService(Payment payment) {
-        return new PaymentModelService(payment.getPayTime(),payment.getAmount());
+    public static PaymentModel entryToService(Payment payment) {
+        return new PaymentModel(payment.getPayTime(),payment.getAmount());
     }
 }

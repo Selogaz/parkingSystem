@@ -21,11 +21,11 @@ public class Payment {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "car_id",
+            name = "entry_id",
             referencedColumnName = "id",
             nullable = true
     )
-    private Car car;
+    private Entry entry;
 
     @Column(name = "pay_time")
     private LocalDateTime payTime;
@@ -33,8 +33,8 @@ public class Payment {
     @Column(name = "amount")
     private Long amount;
 
-    public Payment(Car car, LocalDateTime payTime, Long amount) {
-        this.car = car;
+    public Payment(Entry entry, LocalDateTime payTime, Long amount) {
+        this.entry = entry;
         this.payTime = payTime;
         this.amount = amount;
     }

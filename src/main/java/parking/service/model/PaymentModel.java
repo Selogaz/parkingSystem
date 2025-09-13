@@ -8,17 +8,17 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class PaymentModelService {
+public class PaymentModel {
     private UUID id;
     private LocalDateTime payTime;
     private Long amount;
 
-    public PaymentModelService(LocalDateTime payTime, Long amount) {
+    public PaymentModel(LocalDateTime payTime, Long amount) {
         this.payTime = payTime;
         this.amount = amount;
     }
 
-    public PaymentModelService() {
+    public PaymentModel() {
 
     }
 }

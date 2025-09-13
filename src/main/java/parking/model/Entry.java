@@ -2,10 +2,8 @@ package parking.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import parking.controller.model.CarRequest;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -14,7 +12,7 @@ import java.util.UUID;
 @Table(name = "entry_entity")
 @Getter
 @Setter
-public class Car {
+public class Entry {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
@@ -27,14 +25,14 @@ public class Car {
     @Column(name = "exit_time")
     private LocalDateTime exitTime;
 
-    @OneToOne(mappedBy = "car", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "entry", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Payment payment;
 
-    public Car() {
+    public Entry() {
 
     }
 
-    public Car(UUID id) {
+    public Entry(UUID id) {
         this.id = id;
     }
 }

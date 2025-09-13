@@ -2,12 +2,11 @@ package parking.storage.parking;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
-import parking.model.Car;
+import parking.model.Entry;
 import parking.model.Payment;
 import parking.repository.ParkingRepository;
 import parking.service.converter.ConvertToService;
-import parking.service.model.CarService;
-import parking.service.model.PaymentModelService;
+import parking.service.model.EntryModel;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,44 +22,44 @@ public class ParkingStorageDatabase implements ParkingStorage {
     }
 
     @Override
-    public UUID putEntity(CarService car) {
-        Car hiberCar = new Car();
-        hiberCar.setEntryTime(car.getEntryTime());
-        hiberCar.setExitTime(car.getExitTime());
-        parkingRepository.save(hiberCar);
-        return hiberCar.getId();
+    public UUID putEntity(EntryModel car) {
+        Entry hiberEntry = new Entry();
+        hiberEntry.setEntryTime(car.getEntryTime());
+        hiberEntry.setExitTime(car.getExitTime());
+        parkingRepository.save(hiberEntry);
+        return hiberEntry.getId();
     }
 
     @Override
-    public void removeEntity(CarService car) {
-        Car hiberCar = new Car();
-        hiberCar.setId(car.getId());
-        hiberCar.setEntryTime(car.getEntryTime());
-        hiberCar.setExitTime(car.getExitTime());
+    public void removeEntity(EntryModel car) {
+        Entry hiberEntry = new Entry();
+        hiberEntry.setId(car.getId());
+        hiberEntry.setEntryTime(car.getEntryTime());
+        hiberEntry.setExitTime(car.getExitTime());
         if (car.getPayment() == null) {
-            parkingRepository.delete(hiberCar);
+            parkingRepository.delete(hiberEntry);
             return;
         }
-        Payment payment = new Payment(hiberCar,car.getPayment().getPayTime(),car.getPayment().getAmount());
-        hiberCar.setPayment(payment);
-        parkingRepository.delete(hiberCar);
+        Payment payment = new Payment(hiberEntry,car.getPayment().getPayTime(),car.getPayment().getAmount());
+        hiberEntry.setPayment(payment);
+        parkingRepository.delete(hiberEntry);
     }
 
     @Override
-    public CarService getEntity(UUID id) {
-        Car hiberCar = parkingRepository.getReferenceById(id);
-        return ConvertToService.entryToService(hiberCar);
+    public EntryModel getEntity(UUID id) {
+        Entry hiberEntry = parkingRepository.getReferenceById(id);
+        return ConvertToService.entryToService(hiberEntry);
     }
 
     @Override
-    public Collection<CarService> getAllEntities() {
-        Collection<Car> hiberCarList = parkingRepository.findAll();
-        Collection<CarService> carServiceList = new ArrayList<>();
-        for (Car hiberCar : hiberCarList) {
-            CarService carService = ConvertToService.entryToService(hiberCar);
-            carServiceList.add(carService);
+    public Collection<EntryModel> getAllEntities() {
+        Collection<Entry> hiberEntryList = parkingRepository.findAll();
+        Collection<EntryModel> entryModelList = new ArrayList<>();
+        for (Entry hiberEntry : hiberEntryList) {
+            EntryModel entryModel = ConvertToService.entryToService(hiberEntry);
+            entryModelList.add(entryModel);
         }
-        return carServiceList;
+        return entryModelList;
     }
 
     @Override

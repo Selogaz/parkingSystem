@@ -2,7 +2,7 @@ package parking.service.parking;
 
 
 import org.springframework.stereotype.Service;
-import parking.service.model.CarService;
+import parking.service.model.EntryModel;
 import parking.service.payment.PaymentService;
 import parking.storage.parking.ParkingStorage;
 
@@ -23,8 +23,8 @@ public class ParkingService {
         this.parkingStorage = parkingStorage;
     }
 
-    public CarService entryCar() {
-        CarService newCar = new CarService();
+    public EntryModel entryCar() {
+        EntryModel newCar = new EntryModel();
         if (parkingStorage.size() < PARKING_ZONE_SIZE) {
             newCar.setEntryTime(LocalDateTime.now());
 
@@ -38,8 +38,8 @@ public class ParkingService {
         return newCar;
     }
 
-    public CarService exitCar(UUID id) {
-        CarService car = parkingStorage.getEntity(id);
+    public EntryModel exitCar(UUID id) {
+        EntryModel car = parkingStorage.getEntity(id);
         long minutesParked = java.time.Duration.between(car.getEntryTime(), LocalDateTime.now()).toMinutes();
         if (minutesParked < MAXIMUM_PARKING_TIME_IN_MINUTES) {
             car.setExitTime(LocalDateTime.now());
@@ -58,13 +58,13 @@ public class ParkingService {
         throw new NoSuchElementException("Автомобиль с указанным ID не найден на парковке.");
     }
 
-    public Collection<CarService> getEntry() {
+    public Collection<EntryModel> getEntry() {
         return parkingStorage.getAllEntities();
     }
 
-    public CarService changeEntryTime(UUID id) {
+    public EntryModel changeEntryTime(UUID id) {
         try {
-            CarService car = parkingStorage.getEntity(id);
+            EntryModel car = parkingStorage.getEntity(id);
             car.setEntryTime(LocalDateTime.now().minusMinutes(40));
             parkingStorage.putEntity(car);
             System.out.println("Время успешно изменено!");

@@ -3,10 +3,10 @@ package parking.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import parking.controller.converter.Converter;
-import parking.controller.model.CarRequest;
+import parking.controller.model.EntryRequest;
 import parking.controller.model.Response;
 
-import parking.service.model.CarService;
+import parking.service.model.EntryModel;
 import parking.service.parking.ParkingException;
 import parking.service.payment.PaymentRequiredException;
 
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import parking.service.parking.ParkingService;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -31,7 +30,7 @@ public class ParkingController {
     }
 
     @GetMapping()
-    public Collection<CarService> getEntryRequest() {
+    public Collection<EntryModel> getEntryRequest() {
         return parkingService.getEntry();
     }
 
@@ -42,8 +41,8 @@ public class ParkingController {
     }
 
     @PostMapping("/exit")
-    public ResponseEntity<Response> exitCar(@RequestBody CarRequest newRequest) {
-        CarService car = Converter.fromRequestToCar(newRequest);
+    public ResponseEntity<Response> exitCar(@RequestBody EntryRequest newRequest) {
+        EntryModel car = Converter.fromRequestToCar(newRequest);
         Response response = Converter.toResponse(parkingService.exitCar(car.getId()));
         return ResponseEntity.ok(response);
     }

@@ -2,28 +2,26 @@ package parking.service.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import parking.model.Payment;
-import parking.service.payment.PaymentService;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Setter
 @Getter
-public class CarService {
+public class EntryModel {
     private UUID id;
     private LocalDateTime entryTime;
     private LocalDateTime exitTime;
-    private PaymentModelService payment;
+    private PaymentModel payment;
 
-    public CarService() {
+    public EntryModel() {
     }
 
-    public CarService(UUID id) {
+    public EntryModel(UUID id) {
         this.id = id;
     }
 
-    public CarService(UUID id, LocalDateTime entryTime, LocalDateTime exitTime, PaymentModelService payment) {
+    public EntryModel(UUID id, LocalDateTime entryTime, LocalDateTime exitTime, PaymentModel payment) {
         this.id = id;
         this.entryTime = entryTime;
         this.exitTime = exitTime;

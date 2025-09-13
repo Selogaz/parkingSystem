@@ -1,8 +1,7 @@
 package parking.storage.parking;
 
 import org.springframework.stereotype.Component;
-import parking.model.Car;
-import parking.service.model.CarService;
+import parking.service.model.EntryModel;
 
 import java.util.Collection;
 import java.util.Map;
@@ -12,23 +11,23 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 
 public class ParkingStorageInMemory implements ParkingStorage{
-    private final Map<UUID, CarService> carsInsideMap = new ConcurrentHashMap<>();
+    private final Map<UUID, EntryModel> carsInsideMap = new ConcurrentHashMap<>();
 
-    public UUID putEntity(CarService car) {
+    public UUID putEntity(EntryModel car) {
         car.setId(UUID.randomUUID());
         carsInsideMap.put(car.getId(),car);
         return car.getId();
     }
 
-    public void removeEntity(CarService car) {
+    public void removeEntity(EntryModel car) {
         carsInsideMap.remove(car.getId(),car);
     }
 
-    public CarService getEntity(UUID id) {
+    public EntryModel getEntity(UUID id) {
        return carsInsideMap.get(id);
     }
 
-    public Collection<CarService> getAllEntities() {
+    public Collection<EntryModel> getAllEntities() {
         return carsInsideMap.values();
     }
 

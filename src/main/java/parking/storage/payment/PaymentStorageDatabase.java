@@ -1,13 +1,13 @@
 package parking.storage.payment;
 
 import org.springframework.stereotype.Component;
-import parking.model.Car;
+import parking.model.Entry;
 import parking.model.Payment;
 import parking.repository.ParkingRepository;
 import parking.repository.PaymentRepository;
 import parking.service.converter.ConvertToService;
-import parking.service.model.CarService;
-import parking.service.model.PaymentModelService;
+import parking.service.model.EntryModel;
+import parking.service.model.PaymentModel;
 
 @Component
 public class PaymentStorageDatabase implements PaymentStorage{
@@ -20,23 +20,23 @@ public class PaymentStorageDatabase implements PaymentStorage{
     }
 
     @Override
-    public void makePay(PaymentModelService payment, CarService car) {
+    public void makePay(PaymentModel payment, EntryModel car) {
         car.setPayment(payment);
 
-        Car hiberCar = new Car();
-        hiberCar.setId(car.getId());
-        hiberCar.setEntryTime(car.getEntryTime());
-        hiberCar.setExitTime(car.getExitTime());
+        Entry hiberEntry = new Entry();
+        hiberEntry.setId(car.getId());
+        hiberEntry.setEntryTime(car.getEntryTime());
+        hiberEntry.setExitTime(car.getExitTime());
 
-        Payment hiberPay = new Payment(hiberCar,payment.getPayTime(),payment.getAmount());
-        hiberCar.setPayment(hiberPay);
+        Payment hiberPay = new Payment(hiberEntry,payment.getPayTime(),payment.getAmount());
+        hiberEntry.setPayment(hiberPay);
         paymentRepository.save(hiberPay);
-        parkingRepository.save(hiberCar);
+        parkingRepository.save(hiberEntry);
 
     }
 
     @Override
-    public PaymentModelService getPayment(CarService car) {
+    public PaymentModel getPayment(EntryModel car) {
         Payment payment = paymentRepository.getReferenceById(car.getPayment().getId());
         return ConvertToService.entryToService(payment);
     }
