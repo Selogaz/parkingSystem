@@ -1,7 +1,8 @@
 package parking.service.parking;
 
-import parking.model.Car;
+
 import org.springframework.stereotype.Service;
+import parking.service.model.CarService;
 import parking.service.payment.PaymentService;
 import parking.storage.parking.ParkingStorage;
 
@@ -22,8 +23,8 @@ public class ParkingService {
         this.parkingStorage = parkingStorage;
     }
 
-    public Car entryCar() {
-        Car newCar = new Car();
+    public CarService entryCar() {
+        CarService newCar = new CarService();
         if (parkingStorage.size() < PARKING_ZONE_SIZE) {
             newCar.setEntryTime(LocalDateTime.now());
 
@@ -31,13 +32,14 @@ public class ParkingService {
             System.err.println("Въезд невозможен! Парковка заполнена!");
             throw new ParkingException("Въезд невозможен! Парковка заполнена!");
         }
-        parkingStorage.putEntity(newCar);
+        UUID id = parkingStorage.putEntity(newCar);
+        newCar.setId(id);
         System.out.println("Добавлен автомобиль с id " + newCar.getId());
         return newCar;
     }
 
-    public Car exitCar(UUID id) {
-        Car car = parkingStorage.getEntity(id);
+    public CarService exitCar(UUID id) {
+        CarService car = parkingStorage.getEntity(id);
         long minutesParked = java.time.Duration.between(car.getEntryTime(), LocalDateTime.now()).toMinutes();
         if (minutesParked < MAXIMUM_PARKING_TIME_IN_MINUTES) {
             car.setExitTime(LocalDateTime.now());
@@ -56,13 +58,13 @@ public class ParkingService {
         throw new NoSuchElementException("Автомобиль с указанным ID не найден на парковке.");
     }
 
-    public Collection<Car> getEntry() {
+    public Collection<CarService> getEntry() {
         return parkingStorage.getAllEntities();
     }
 
-    public Car changeEntryTime(UUID id) {
+    public CarService changeEntryTime(UUID id) {
         try {
-            Car car = parkingStorage.getEntity(id);
+            CarService car = parkingStorage.getEntity(id);
             car.setEntryTime(LocalDateTime.now().minusMinutes(40));
             parkingStorage.putEntity(car);
             System.out.println("Время успешно изменено!");

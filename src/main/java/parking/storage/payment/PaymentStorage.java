@@ -1,9 +1,10 @@
 package parking.storage.payment;
 
-import parking.model.Car;
 import parking.model.Payment;
+import parking.service.model.CarService;
+import parking.service.model.PaymentModelService;
 
 public interface PaymentStorage {
-    void makePay(Payment payment, Car car);
-    Payment getPayment(Car car);
+    void makePay(PaymentModelService payment, CarService car);
+    PaymentModelService getPayment(CarService car);
 }

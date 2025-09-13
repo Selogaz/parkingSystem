@@ -1,8 +1,8 @@
 package parking.service.payment;
 
 import org.springframework.stereotype.Service;
-import parking.model.Car;
-import parking.model.Payment;
+import parking.service.model.CarService;
+import parking.service.model.PaymentModelService;
 import parking.storage.payment.PaymentStorage;
 
 import java.time.LocalDateTime;
@@ -18,14 +18,14 @@ public class PaymentService {
         this.paymentStorage = paymentStorage;
     }
 
-    public boolean pay(Car car) {
+    public boolean pay(CarService car) {
         //payList.add(car.getId());
-        Payment payment = new Payment(car, LocalDateTime.now(),100L);
+        PaymentModelService payment = new PaymentModelService(LocalDateTime.now(),100L);
         paymentStorage.makePay(payment,car);
         return isPaymentValid(car);
     }
 
-    private boolean isPaymentValid(Car car) {
+    private boolean isPaymentValid(CarService car) {
         //if (payList.contains(id)) {
         if (paymentStorage.getPayment(car).getId().equals(car.getPayment().getId())) {
             System.out.println("Оплата для id " + car.getId() + " прошла успешно!");
