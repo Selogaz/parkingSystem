@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-insert-initial-data
+      author: myuser
+      changes:
+        - insert:
+            tableName: entry
+            columns:
+              - column:
+                  name: id
+                  value: "b1e3acfa-23b1-4961-bce2-f01385b2f8a3"
+              - column:
+                  name: entry_time
+                  valueDate: "2025-09-14T20:00:00"
+              - column:
+                  name: exit_time
+                  valueDate: "2025-09-14T22:00:00"
+
+        - insert:
+            tableName: payment
+            columns:
+              - column:
+                  name: id
+                  value: "850315f0-e812-49c4-bbac-9d41fb59c348"
+              - column:
+                  name: entry_id
+                  value: "b1e3acfa-23b1-4961-bce2-f01385b2f8a3"
+              - column:
+                  name: pay_time
+                  valueDate: "2025-09-14T21:00:00"
+              - column:
+                  name: amount
+                  valueNumeric: 1000
