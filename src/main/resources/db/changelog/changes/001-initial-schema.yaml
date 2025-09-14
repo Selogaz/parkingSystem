@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-tables
+      author: myuser
+      changes:
+        - createTable:
+            tableName: entry
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: entry_time
+                  type: TIMESTAMP
+              - column:
+                  name: exit_time
+                  type: TIMESTAMP
+
+        - createTable:
+            tableName: payment
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: entry_id
+                  type: UUID
+                  constraints:
+                    nullable: true
+                    foreignKeyName: fk_payment_entry
+                    references: entry(id)
+              - column:
+                  name: pay_time
+                  type: TIMESTAMP
+              - column:
+                  name: amount
+                  type: BIGINT

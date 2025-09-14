@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "entry_entity")
+@Table(name = "entry")
 @Getter
 @Setter
 public class Entry {
